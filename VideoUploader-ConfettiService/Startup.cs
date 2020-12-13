@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VideoUploader_ConfettiService.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace VideoUploader_ConfettiService
 {
@@ -24,7 +27,10 @@ namespace VideoUploader_ConfettiService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddControllers();
+            services.AddDbContext<VideoDbContext>(options=>options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=confettivideodb;User Id=confettidba;Password=Conf3tti123;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +41,7 @@ namespace VideoUploader_ConfettiService
                 app.UseDeveloperExceptionPage();
             }
 
+            
             app.UseRouting();
 
             app.UseAuthorization();
