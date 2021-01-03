@@ -44,47 +44,7 @@ namespace VideoUploader_ConfettiService
         }
 
 
-        [HttpPost("[action]")]
-        public void Save(IList<IFormFile> chunkFile, IList<IFormFile> UploadFiles)
-        {
-            long size = 0;
-            try
-            {
-                foreach (var file in chunkFile)
-                {
-                    var filename = ContentDispositionHeaderValue
-                                            .Parse(file.ContentDisposition)
-                                            .FileName
-                                            .Trim('"');
-                    filename = _hostEnv.ContentRootPath + $@"\{filename}";
-                    size += file.Length;
-                    if (!System.IO.File.Exists(filename))
-                    {
-                        using (FileStream fs = System.IO.File.Create(filename))
-                        {
-                            file.CopyTo(fs);
-                            fs.Flush();
-                        }
-                    }
-                    else
-                    {
-                        using (FileStream fs = System.IO.File.Open(filename, FileMode.Append))
-                        {
-                            file.CopyTo(fs);
-                            fs.Flush();
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Response.Clear();
-                Response.StatusCode = 204;
-                Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "File failed to upload";
-                Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = e.Message;
-            }
-        }
-
+      
         [HttpPost]
         [RequestSizeLimit(1073741824)]
         [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
