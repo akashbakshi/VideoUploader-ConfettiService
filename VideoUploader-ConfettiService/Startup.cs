@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VideoUploader_ConfettiService.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Http.Features;
 
 namespace VideoUploader_ConfettiService
 {
@@ -28,8 +28,16 @@ namespace VideoUploader_ConfettiService
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.Configure<FormOptions>(options => options.MultipartBodyLengthLimit = long.MaxValue); // or other given limit
 
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod();
+                });
+            });
             services.AddDbContext<VideoDbContext>(options=>options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=confettivideodb;User Id=confettidba;Password=Conf3tti123;"));
         }
 
@@ -41,11 +49,11 @@ namespace VideoUploader_ConfettiService
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            app.UseCors("CorsPolicy");
             app.UseRouting();
 
             app.UseAuthorization();
-
+         
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

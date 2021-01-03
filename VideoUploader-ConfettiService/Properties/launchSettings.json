@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:58318",
+      "applicationUrl": "http://localhost:5001",
       "sslPort": 0
     }
   },
@@ -20,7 +20,7 @@
     "VideoUploader_ConfettiService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "/api/video",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

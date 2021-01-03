@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace VideoUploader_ConfettiService
@@ -9,7 +10,8 @@ namespace VideoUploader_ConfettiService
     public class Video
     {
         [Key]
-        public int VideoId { get; set; }
+        [JsonIgnore]
+        public Guid VideoId { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -23,9 +25,10 @@ namespace VideoUploader_ConfettiService
         public DateTime? UpdatedAt { get; set; }
 
         [Required]
-        public string LinkURL { get; set; }
+        public string LinkURL {get;set;  }
 
         [Required]
+        [JsonIgnore]
         public string BucketURL { get; set; }
 
         public int Views { get; set; }

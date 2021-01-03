@@ -20,7 +20,11 @@ namespace VideoUploader_ConfettiService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .ConfigureKestrel(options =>
+                    {
+                        options.Limits.MaxRequestBodySize = 1073741824;
+                    });
                 });
     }
 }
